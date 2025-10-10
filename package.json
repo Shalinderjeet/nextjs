@@ -5,6 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
+     "start-no-build": "rm -rf .next && next start"
   },
   "dependencies": {
     "next": "latest",
@@ -17,3 +18,4 @@
     "typescript": "^5.9.3"
   }
 }
+
