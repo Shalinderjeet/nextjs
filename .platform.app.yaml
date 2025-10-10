@@ -8,7 +8,7 @@ hooks:
 
 web:
   commands:
-    start: "npm start"
+    start: "npm run start-no-build"
   locations:
     "/":
       passthru: true
