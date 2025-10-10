@@ -1,0 +1,13 @@
+name: nextjs
+type: "nodejs:20"
+hooks:
+  build: |
+    npm install
+    npm run build
+web:
+  commands:
+    start: "npm start"
+  locations:
+    "/":
+      passthru: true
+
