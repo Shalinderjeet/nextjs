@@ -10,4 +10,7 @@ web:
   locations:
     "/":
       passthru: true
-
+workers:
+  background:
+    commands:
+      start: "node app/worker.js"
