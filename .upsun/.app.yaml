@@ -1,0 +1,16 @@
+name: nextjs
+type: "nodejs:20"
+hooks:
+  build: |
+    npm install
+    npm run build
+web:
+  commands:
+    start: "npm run"
+  locations:
+    "/":
+      passthru: true
+workers:
+  background:
+    commands:
+      start: "node app/worker.js"
