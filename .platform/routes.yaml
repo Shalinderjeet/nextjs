@@ -5,20 +5,21 @@
   type: upstream
   upstream: "app:http"
 
-# Block access to vulnerable Next.js endpoints temporarily
+# Temporary mitigation: block _next path (RCE sensitive)
 "https://{default}/_next":
-  type: redirect
-  to: "https://{default}/"
-  code: 403
+  type: upstream
+  upstream: "null:http"
 
-"https://{default}/?__flight__=":
-  type: redirect
-  to: "https://{default}/"
-  code: 403
+# Temporary mitigation: block __flight__ query (Server Actions)
+"https://{default}/":
+  type: upstream
+  upstream: "app:http"
+  allow:
+    - "^((?!__flight__).)*$"
 
-# Optional: restrict access to your VPN IP (replace with actual IP or range)
-# Only needed if your manager wants VPN-only access
-# Uncomment and set your VPN IP
+# Optional VPN restriction (replace with your VPN IP)
+# Only allow your VPN IP to access the app
+# Uncomment if needed
 # "https://{default}/":
 #   type: upstream
 #   upstream: "app:http"
