@@ -6,7 +6,7 @@ hooks:
     npm run build
 web:
   commands:
-    start: "npm run"
+    start: "npm run start"
   locations:
     "/":
       passthru: true
