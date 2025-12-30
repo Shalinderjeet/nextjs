@@ -1,0 +1,28 @@
+# .platform/routes.yaml
+
+# Main app route
+"https://{default}/":
+  type: upstream
+  upstream: "app:http"
+
+# Block access to vulnerable Next.js endpoints temporarily
+"https://{default}/_next":
+  type: redirect
+  to: "https://{default}/"
+  code: 403
+
+"https://{default}/?__flight__=":
+  type: redirect
+  to: "https://{default}/"
+  code: 403
+
+# Optional: restrict access to your VPN IP (replace with actual IP or range)
+# Only needed if your manager wants VPN-only access
+# Uncomment and set your VPN IP
+# "https://{default}/":
+#   type: upstream
+#   upstream: "app:http"
+#   restrictions:
+#     ips:
+#       - 203.0.113.45/32  # replace with your VPN IP
+
