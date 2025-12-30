@@ -1,29 +1,13 @@
 # .platform/routes.yaml
 
-# Main app route
 "https://{default}/":
   type: upstream
   upstream: "app:http"
+  # Optional VPN restriction - uncomment and replace with your VPN IP
+  # restrictions:
+  #   ips:
+  #     - 203.0.113.45/32
 
-# Temporary mitigation: block _next path (RCE sensitive)
-"https://{default}/_next":
-  type: upstream
-  upstream: "null:http"
+# Block Next.js _next path to mitigate RCE
 
-# Temporary mitigation: block __flight__ query (Server Actions)
-"https://{default}/":
-  type: upstream
-  upstream: "app:http"
-  allow:
-    - "^((?!__flight__).)*$"
-
-# Optional VPN restriction (replace with your VPN IP)
-# Only allow your VPN IP to access the app
-# Uncomment if needed
-# "https://{default}/":
-#   type: upstream
-#   upstream: "app:http"
-#   restrictions:
-#     ips:
-#       - 203.0.113.45/32  # replace with your VPN IP
 
