@@ -1,13 +1,7 @@
 # .platform/routes.yaml
 
-"https://{default}/":
+https://{default}/:
   type: upstream
-  upstream: "app:http"
-  # Optional VPN restriction - uncomment and replace with your VPN IP
-  # restrictions:
-  #   ips:
-  #     - 203.0.113.45/32
+  upstream: app:http
 
-# Block Next.js _next path to mitigate RCE
-
-
+~
