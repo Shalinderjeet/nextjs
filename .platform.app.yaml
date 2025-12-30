@@ -10,6 +10,9 @@ web:
   locations:
     "/":
       passthru: true
+relationships:
+    mariadb:
+    postgresql:  
 workers:
   background:
     commands:

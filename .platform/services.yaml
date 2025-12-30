@@ -1,0 +1,7 @@
+services:
+  # The name of the service container. Must be unique within a project.
+  mariadb:
+    type: mariadb:11.8
+  # The name of the service container. Must be unique within a project.
+  postgresql:
+    type: postgresql:18
