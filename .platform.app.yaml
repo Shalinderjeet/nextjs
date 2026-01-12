@@ -11,8 +11,7 @@ web:
     "/":
       passthru: true
 relationships:
-    mariadb:
-    postgresql:  
+  database: "db:mariadb" 
 workers:
   background:
     commands:

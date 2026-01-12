@@ -1,9 +1,6 @@
 
   # The name of the service container. Must be unique within a project.
-mariadb:
-    type: mariadb:11.8
-    disk: 1048
-  # The name of the service container. Must be unique within a project.
-postgresql:
-    type: postgresql:18
-    disk: 1048  
+db:
+  type: mariadb:11.8
+  disk: 1048
+ 
