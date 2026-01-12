@@ -11,7 +11,7 @@ web:
     "/":
       passthru: true
 relationships:
-  database: "db:mariadb" 
+  database: "db:mysql" 
 workers:
   background:
     commands:
