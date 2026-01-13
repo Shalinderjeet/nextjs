@@ -7,7 +7,7 @@ hooks:
     npm run build
 
   deploy: |
-    .platform/hooks/deploy/sanitize-db.sh
+    bash .platform/hooks/deploy/sanitize-db.sh
 
 web:
   commands:
