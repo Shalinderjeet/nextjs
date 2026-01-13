@@ -1,0 +1,17 @@
+#!/bin/bash
+# This script runs at container start and on SSH sessions
+
+# Decode PLATFORM_RELATIONSHIPS JSON
+relationships_json=$(echo "$PLATFORM_RELATIONSHIPS" | base64 --decode)
+
+# Extract the database connection info for your relationship (replace 'database' if needed)
+db_host=$(echo "$relationships_json" | jq -r '.database[0].host')
+db_port=$(echo "$relationships_json" | jq -r '.database[0].port')
+db_user=$(echo "$relationships_json" | jq -r '.database[0].username')
+db_pass=$(echo "$relationships_json" | jq -r '.database[0].password')
+db_name=$(echo "$relationships_json" | jq -r '.database[0].path')
+
+# Build DATABASE_URL in standard format
+# For MariaDB/MySQL: mysql://user:password@host:port/dbname
+export DATABASE_URL="mysql://${db_user}:${db_pass}@${db_host}:${db_port}/${db_name}"
+

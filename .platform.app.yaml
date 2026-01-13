@@ -27,7 +27,7 @@ hooks:
     fi
 web:
   commands:
-    start: "npm start"
+    start: "npm run start"
   locations:
     "/":
       passthru: true        

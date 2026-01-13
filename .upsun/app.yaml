@@ -1,5 +1,6 @@
 name: nextjs
-type: "nodejs:20"
+runtime:  
+  type: "nodejs:20"
 hooks:
   build: |
     npm install
