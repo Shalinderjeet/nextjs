@@ -7,7 +7,25 @@ hooks:
     npm run build
 
   deploy: |
-    - .platform/hooks/deploy/sanitize-db.sh
+    # Only sanitize on PR environments
+    if [ -n "$PLATFORM_PULL_REQUEST" ]; then
+      echo "PR environment detected – sanitizing database"
+
+      # Extract relationship info
+      DBJSON=$(echo "$PLATFORM_RELATIONSHIPS" | base64 --decode | jq -r '.database[0]')
+      DB_HOST=$(echo "$DBJSON" | jq -r '.host')
+      DB_PORT=$(echo "$DBJSON" | jq -r '.port')
+      DB_USER=$(echo "$DBJSON" | jq -r '.username')
+      DB_PASS=$(echo "$DBJSON" | jq -r '.password')
+      DB_NAME=$(echo "$DBJSON" | jq -r '.path')
+
+      # Run sanitization queries without heredoc
+      mysql -h "$DB_HOST" -P "$DB_PORT" -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "UPDATE users SET email = CONCAT('user+', id, '@example.com'), phone = NULL;"
+
+      echo "Database sanitization completed"
+    else
+      echo "Not a PR environment – skipping sanitization"
+    fi
 
 web:
   commands:
