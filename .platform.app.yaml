@@ -1,10 +1,15 @@
 name: nextjs
 type: "nodejs:20"
+
 hooks:
   build: |
     npm install
     npm run build
+
   deploy: |
+    #!/bin/sh
+    set -e
+
     if [ -n "$PLATFORM_PULL_REQUEST" ]; then
       echo "PR environment detected – sanitizing database"
 
@@ -16,24 +21,28 @@ hooks:
       DB_NAME=$(echo "$DB_CREDENTIALS" | jq -r '.path')
 
       mysql -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" <<EOF
-        UPDATE users
-        SET email = CONCAT('user+', id, '@example.com'),
-            phone = NULL;
-      EOF
+UPDATE users
+SET email = CONCAT('user+', id, '@example.com'),
+    phone = NULL;
+EOF
 
       echo "Database sanitization completed"
     else
       echo "Not a PR environment – skipping sanitization"
     fi
+
 web:
   commands:
     start: "npm run start"
   locations:
     "/":
-      passthru: true        
+      passthru: true
+
 relationships:
-  database: "db:mysql" 
+  database: "db:mysql"
+
 workers:
   background:
     commands:
       start: "node app/worker.js"
+
