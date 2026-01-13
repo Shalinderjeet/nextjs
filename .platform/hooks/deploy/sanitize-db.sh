@@ -1,4 +1,3 @@
-#!/bin/sh
 set -e
 
 if [ -n "$PLATFORM_PULL_REQUEST" ]; then
